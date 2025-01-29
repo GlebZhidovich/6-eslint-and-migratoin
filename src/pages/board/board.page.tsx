@@ -1,4 +1,5 @@
 import { useSession } from "@/entities/session";
+import { subject, useAbility } from "@/features/auth";
 import { Board, BoardActions, useFetchBoard } from "@/features/dnd-board";
 import { ComposeChildren } from "@/shared/lib/react";
 import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
@@ -13,6 +14,7 @@ export function BoardPage() {
   const params = useParams<"boardId">();
   const boardId = params.boardId;
   const sesson = useSession((s) => s.currentSession);
+  const ability = useAbility();
 
   const { board } = useFetchBoard(boardId);
 
@@ -22,6 +24,12 @@ export function BoardPage() {
 
   if (!board) {
     return <UiPageSpinner />;
+  }
+
+  const canViewBoard = ability.can("read", subject("Board", board));
+
+  if (!canViewBoard) {
+    return <div>Нет доступа к доске</div>;
   }
 
   return (
