@@ -1,5 +1,6 @@
 import { useSession } from "@/entities/session";
 import { subject, useAbility } from "@/features/auth";
+import { BoardEditorsList } from "@/features/board-editors-list";
 import { Board, BoardActions, useFetchBoard } from "@/features/dnd-board";
 import { ComposeChildren } from "@/shared/lib/react";
 import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
@@ -15,7 +16,6 @@ export function BoardPage() {
   const boardId = params.boardId;
   const sesson = useSession((s) => s.currentSession);
   const ability = useAbility();
-
   const { board } = useFetchBoard(boardId);
 
   if (!sesson) {
@@ -37,7 +37,9 @@ export function BoardPage() {
       <TaskEditorProvider board={board} />
       <BoardDepsProvider sesson={sesson} />
       <BoardStoreProvider board={board} />
+
       <div className="flex flex-col py-3 px-4 grow">
+        <BoardEditorsList board={board} />
         <h1 className="text-3xl mb-4 shrink-0 ">{board?.title}</h1>
         <BoardActions className="shrink-0 mb-2" />
         <Board className="basis-0 grow" />
