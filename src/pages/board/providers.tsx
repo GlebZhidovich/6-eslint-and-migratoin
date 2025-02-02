@@ -1,6 +1,8 @@
 import { Board as BoardType } from "@/entities/board";
 import { Session } from "@/entities/session";
 import { useTasks } from "@/entities/task";
+import { subject, useAbility } from "@/features/auth";
+import { BoardEditorsContext } from "@/features/board-editors-list";
 import {
   boardDepsContext,
   boardStoreContext,
@@ -73,5 +75,19 @@ export function BoardStoreProvider({
     <boardStoreContext.Provider value={boardStore}>
       {children}
     </boardStoreContext.Provider>
+  );
+}
+
+export function BoardListProvider({ children }: { children: React.ReactNode }) {
+  const ability = useAbility();
+  return (
+    <BoardEditorsContext.Provider
+      value={{
+        canUpdateBoardEditors: (board) =>
+          ability.can("update", subject("Board", board)),
+      }}
+    >
+      {children}
+    </BoardEditorsContext.Provider>
   );
 }

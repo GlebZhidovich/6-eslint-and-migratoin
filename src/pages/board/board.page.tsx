@@ -7,6 +7,7 @@ import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { useParams } from "react-router-dom";
 import {
   BoardDepsProvider,
+  BoardListProvider,
   BoardStoreProvider,
   TaskEditorProvider,
 } from "./providers";
@@ -37,13 +38,14 @@ export function BoardPage() {
       <TaskEditorProvider board={board} />
       <BoardDepsProvider sesson={sesson} />
       <BoardStoreProvider board={board} />
-
-      <div className="flex flex-col py-3 px-4 grow">
-        <BoardEditorsList board={board} />
-        <h1 className="text-3xl mb-4 shrink-0 ">{board?.title}</h1>
-        <BoardActions className="shrink-0 mb-2" />
-        <Board className="basis-0 grow" />
-      </div>
+      <BoardListProvider>
+        <div className="flex flex-col py-3 px-4 grow">
+          <BoardEditorsList board={board} />
+          <h1 className="text-3xl mb-4 shrink-0 ">{board?.title}</h1>
+          <BoardActions className="shrink-0 mb-2" />
+          <Board className="basis-0 grow" />
+        </div>
+      </BoardListProvider>
     </ComposeChildren>
   );
 }
