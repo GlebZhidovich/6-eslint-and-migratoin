@@ -14,7 +14,7 @@ export const BoardEditorsList: FC<BoardEditorsListProps> = ({ board }) => {
     <div className="flex flex-col">
       <h3 className="text-2xl mb-4 shrink-0 ">Редакторы:</h3>
       <div className="flex gap-5">
-        <UpdateEditorsButton />
+        <UpdateEditorsButton board={board} />
         <AvatarsList
           avatarsIds={board.editorsIds.map((id) => users[id].avatarId)}
         />
