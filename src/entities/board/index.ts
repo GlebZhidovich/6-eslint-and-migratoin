@@ -1,4 +1,4 @@
-export { useBoards } from "./model/boards.store";
+export { useBoards, isFullBoard } from "./model/boards.store";
 export type { BoardsStore } from "./model/boards.store";
 export type {
   BoardPartial,

@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import {
+  Board,
   BoardCol,
   BoardPartial,
   CreateBoardData,
@@ -66,3 +67,7 @@ export const useBoards = create<BoardsStore>((set, get) => ({
     }
   },
 }));
+
+export function isFullBoard(board?: BoardPartial): board is Board {
+  return !!board && "cols" in board;
+}

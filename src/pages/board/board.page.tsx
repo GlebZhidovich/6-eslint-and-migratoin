@@ -11,13 +11,26 @@ import {
   BoardStoreProvider,
   TaskEditorProvider,
 } from "./providers";
+import { useBoards } from "@/entities/board";
+import { isFullBoard } from "@/entities/board";
 
 export function BoardPage() {
   const params = useParams<"boardId">();
   const boardId = params.boardId;
   const sesson = useSession((s) => s.currentSession);
   const ability = useAbility();
-  const { board } = useFetchBoard(boardId);
+
+  useFetchBoard(boardId);
+
+  const board = useBoards((s) => {
+    if (boardId) {
+      const board = s.getBoardById(boardId);
+
+      if (isFullBoard(board)) {
+        return board;
+      }
+    }
+  });
 
   if (!sesson) {
     return <div>Не авторизован</div>;
